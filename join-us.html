@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us - Aim Club</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      --warning-gradient: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+      --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --facebook-gradient: linear-gradient(135deg, #1877f2 0%, #0c63d4 100%);
+      --instagram-gradient: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      --whatsapp-gradient: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+      --dark-color: #1a1a2e;
+      --light-color: #f8f9fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Inter', 'Poppins', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      direction: rtl;
+      padding: 2rem 1rem;
+    }
+
+    /* Animated Gradient Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      animation: bgShift 15s ease infinite;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(20deg); }
+    }
+
+    /* Interactive Canvas Background */
+    #gameCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      cursor: crosshair;
+    }
+
+    /* Game HUD Container */
+    .game-hud {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 100;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .game-hud > * {
+      pointer-events: auto;
+    }
+
+    .left-hud {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .right-hud {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    /* Score Display */
+    .score-display {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 8px 15px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: slideInLeft 0.5s ease;
+      transition: all 0.3s ease;
+    }
+
+    .score-display:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .score-display .score-label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-bottom: 2px;
+    }
+
+    .score-display .score-value {
+      font-size: 1.3rem;
+      background: var(--warning-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.2s ease;
+    }
+
+    /* High Score Display */
+    .highscore-display {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 8px 15px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+      animation: slideInLeft 0.5s ease 0.2s both;
+      transition: all 0.3s ease;
+    }
+
+    .highscore-display:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .highscore-display .trophy {
+      font-size: 1rem;
+      margin-left: 5px;
+    }
+
+    /* Combo Display */
+    .combo-display {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 8px 15px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 2px solid rgba(255, 100, 100, 0.4);
+      box-shadow: 0 8px 32px rgba(255, 100, 100, 0.2);
+      animation: slideInLeft 0.5s ease 0.4s both;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .combo-display.active {
+      opacity: 1;
+      animation: pulse 0.5s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Game Instructions */
+    .game-instructions {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 10px 15px;
+      border-radius: 12px;
+      color: white;
+      font-size: 0.75rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: slideInRight 0.5s ease;
+      max-width: 180px;
+      transition: all 0.3s ease;
+    }
+
+    .game-instructions:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .game-instructions .tip {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+
+    /* Power-up Display */
+    .powerup-display {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid rgba(100, 255, 100, 0.4);
+      box-shadow: 0 8px 32px rgba(100, 255, 100, 0.3);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .powerup-display.active {
+      opacity: 1;
+      animation: bounceIn 0.5s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: translateX(-50%) scale(0); }
+      50% { transform: translateX(-50%) scale(1.1); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    /* Join Container */
+    .join-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      max-width: 550px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.8s ease;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .join-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .join-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .join-container::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 10px;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .join-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+
+    /* Decorative Glow */
+    .join-container::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Logo */
+    .logo-placeholder {
+      margin-bottom: 1.5rem;
+      animation: logoFloat 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .logo-placeholder img {
+      max-height: 100px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      background: var(--primary-gradient);
+      padding: 4px;
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+    }
+
+    .logo-placeholder img:hover {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.6);
+      filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.8));
+    }
+
+    /* Welcome Text */
+    .welcome-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      animation: fadeIn 1s ease 0.3s both;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Social Title */
+    .social-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+      animation: fadeIn 1s ease 0.5s both;
+      z-index: 1;
+    }
+
+    .social-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--warning-gradient);
+      border-radius: 2px;
+      animation: expandWidth 1s ease 0.7s both;
+    }
+
+    @keyframes expandWidth {
+      from { width: 0; }
+      to { width: 60px; }
+    }
+
+    /* Social Links */
+    .social-links {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      border-radius: 15px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease both;
+      border: 2px solid transparent;
+    }
+
+    .social-btn:nth-child(1) { animation-delay: 0.7s; }
+    .social-btn:nth-child(2) { animation-delay: 0.8s; }
+    .social-btn:nth-child(3) { animation-delay: 0.9s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .social-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .social-btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .social-btn:active {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .social-btn i {
+      margin-left: 12px;
+      font-size: 1.4rem;
+      transition: transform 0.3s ease;
+    }
+
+    .social-btn:hover i {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    /* Facebook Button */
+    .facebook-btn {
+      background: var(--facebook-gradient);
+      color: white;
+    }
+
+    /* Instagram Button */
+    .instagram-btn {
+      background: var(--instagram-gradient);
+      color: white;
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      background: var(--whatsapp-gradient);
+      color: white;
+    }
+
+    /* Footer */
+    .footer {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 600;
+      animation: fadeIn 1.2s ease 1s both;
+      padding-top: 1rem;
+      border-top: 2px solid #f0f0f0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    /* Click Effect Text */
+    .click-effect {
+      position: fixed;
+      font-size: 2rem;
+      font-weight: 900;
+      color: white;
+      pointer-events: none;
+      z-index: 200;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      animation: floatUp 1s ease forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .join-container {
+        padding: 3rem 2rem;
+      }
+
+      .logo-placeholder img {
+        max-height: 100px;
+      }
+
+      .welcome-text {
+        font-size: 1.4rem;
+      }
+
+      .social-title {
+        font-size: 2rem;
+      }
+
+      .social-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      .social-btn i {
+        font-size: 1.5rem;
+      }
+
+      .footer {
+        font-size: 0.95rem;
+      }
+
+      .game-hud {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+      }
+
+      .score-display,
+      .highscore-display,
+      .combo-display {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+      }
+
+      .score-display .score-value {
+        font-size: 1.1rem;
+      }
+
+      .game-instructions {
+        font-size: 0.7rem;
+        padding: 8px 12px;
+        max-width: 150px;
+      }
+
+      .powerup-display {
+        font-size: 0.85rem;
+        padding: 8px 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .join-container {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .welcome-text {
+        font-size: 1.2rem;
+      }
+
+      .social-title {
+        font-size: 1.7rem;
+      }
+
+      .game-hud {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+      }
+
+      .score-display,
+      .highscore-display,
+      .combo-display {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+      }
+
+      .score-display .score-value {
+        font-size: 1rem;
+      }
+
+      .game-instructions {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+        max-width: 130px;
+      }
+
+      .game-instructions .tip {
+        margin-top: 4px;
+        padding-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+
+  <!-- Interactive Game Canvas -->
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- Game HUD -->
+  <div class="game-hud">
+    <div class="left-hud">
+      <div class="score-display">
+        <div class="score-label">النقاط</div>
+        <div class="score-value" id="scoreValue">0</div>
+      </div>
+      
+      <div class="highscore-display">
+        <span class="trophy">🏆</span>
+        <span>أعلى: <span id="highScoreValue">0</span></span>
+      </div>
+      
+      <div class="combo-display" id="comboDisplay">
+        🔥 <span id="comboValue">0</span>x
+      </div>
+    </div>
+
+    <div class="right-hud">
+      <div class="game-instructions">
+        <div style="margin-bottom: 6px;">🎮 العب مع الأيقونات!</div>
+        <div style="font-size: 0.7rem; opacity: 0.9;">انقر لكسب النقاط</div>
+        <div class="tip">💡 كومبو = نقاط أكتر!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Power-up Display -->
+  <div class="powerup-display" id="powerupDisplay">
+    ⚡ مضاعفة النقاط! ⚡
+  </div>
+
+  <!-- Join Container -->
+  <div class="join-container" data-aos="zoom-in">
+    <div class="logo-placeholder">
+      <img src="src/aim-club-logo.png" alt="Aim Club Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22%3E%3Ccircle cx=%2270%22 cy=%2270%22 r=%2260%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-weight=%22bold%22%3EAIM%3C/text%3E%3C/svg%3E'">
+    </div>
+    
+    <p class="welcome-text">انضم إلينا لتكون جزءًا من الإبداع والتطور! 🚀</p>
+    
+    <h2 class="social-title">تواصل معنا</h2>
+    
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61581576607907&mibextid=ZbWKwL" target="_blank" class="social-btn facebook-btn">
+        <span>Facebook</span>
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      
+      <a href="https://www.instagram.com/aim_club_sgu?igsh=MWMzaTd2MHdxOHNvdQ==" target="_blank" class="social-btn instagram-btn">
+        <span>Instagram</span>
+        <i class="fab fa-instagram"></i>
+      </a>
+      
+      <a href="https://whatsapp.com/channel/0029VbBNp2Q8fewjESCViZ0w" target="_blank" class="social-btn whatsapp-btn">
+        <span>WhatsApp</span>
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+    
+    <div class="footer">
+      <p>© 2025 Aim Club - تابعنا للمزيد من التحديثات! ✨</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    // Game Variables
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let score = 0;
+    let highScore = parseInt(localStorage.getItem('aimClubHighScore') || '0');
+    let combo = 0;
+    let comboTimer = null;
+    let icons = [];
+    let particles = [];
+    let powerUps = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    let doublePoints = false;
+    let doublePointsTimer = null;
+
+    document.getElementById('highScoreValue').textContent = highScore;
+
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Icon class
+    class Icon {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * canvas.height;
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -50;
+        this.size = 30 + Math.random() * 30;
+        this.speed = 1 + Math.random() * 2.5;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+        
+        const iconTypes = [
+          { symbol: '\uf09a', color: '#1877f2', points: 10, font: '"Font Awesome 6 Brands"' }, // Facebook
+          { symbol: '\uf16d', color: '#e4405f', points: 10, font: '"Font Awesome 6 Brands"' }, // Instagram
+          { symbol: '\uf232', color: '#25d366', points: 10, font: '"Font Awesome 6 Brands"' }, // WhatsApp
+          { symbol: '\uf09b', color: '#333333', points: 15, font: '"Font Awesome 6 Brands"' }, // Github
+          { symbol: '\uf099', color: '#1DA1F2', points: 15, font: '"Font Awesome 6 Brands"' }, // Twitter
+          { symbol: '\uf167', color: '#FF0000', points: 15, font: '"Font Awesome 6 Brands"' }  // YouTube
+        ];
+        
+        const type = iconTypes[Math.floor(Math.random() * iconTypes.length)];
+        this.symbol = type.symbol;
+        this.color = type.color;
+        this.points = type.points;
+        this.font = type.font;
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = 0.05 + Math.random() * 0.05;
+        this.clicked = false;
+        this.scale = 1;
+        this.alpha = 1;
+      }
+
+      update() {
+        this.y += this.speed;
+        this.x += Math.sin(this.wobble) * 0.8;
+        this.wobble += this.wobbleSpeed;
+        this.rotation += this.rotationSpeed;
+
+        // Mouse interaction
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 120 && !this.clicked) {
+          const force = (120 - dist) / 120;
+          this.x -= dx * 0.03 * force;
+          this.y -= dy * 0.03 * force;
+        }
+
+        // Fade out animation when clicked
+        if (this.clicked) {
+          this.scale -= 0.05;
+          this.alpha -= 0.05;
+          if (this.scale <= 0) {
+            this.reset();
+          }
+        }
+
+        if (this.y > canvas.height + 50 && !this.clicked) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.scale(this.scale, this.scale);
+        
+        // Glow effect
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 25;
+        
+        // Icon
+        ctx.font = `900 ${this.size}px ${this.font}`;
+        ctx.fillStyle = this.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.symbol, 0, 0);
+        
+        ctx.restore();
+      }
+
+      isClicked(x, y) {
+        const dist = Math.sqrt((x - this.x) ** 2 + (y - this.y) ** 2);
+        return dist < this.size && !this.clicked;
+      }
+    }
+
+    // Power-up class
+    class PowerUp {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -50;
+        this.size = 40;
+        this.speed = 0.8;
+        this.symbol = '⚡';
+        this.color = '#ffeb3b';
+        this.rotation = 0;
+        this.clicked = false;
+        this.scale = 1;
+        this.alpha = 1;
+        this.pulsePhase = 0;
+      }
+
+      update() {
+        this.y += this.speed;
+        this.rotation += 0.05;
+        this.pulsePhase += 0.1;
+        this.scale = 1 + Math.sin(this.pulsePhase) * 0.2;
+
+        // Mouse attraction
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 150 && !this.clicked) {
+          const force = (150 - dist) / 150;
+          this.x += dx * 0.02 * force;
+          this.y += dy * 0.02 * force;
+        }
+
+        if (this.clicked) {
+          this.scale -= 0.08;
+          this.alpha -= 0.08;
+          if (this.scale <= 0) {
+            this.reset();
+          }
+        }
+
+        if (this.y > canvas.height + 50 && !this.clicked) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.scale(this.scale, this.scale);
+        
+        // Outer glow
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 40;
+        
+        // Draw power-up
+        ctx.font = `900 ${this.size}px Arial`;
+        ctx.fillStyle = this.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.symbol, 0, 0);
+        
+        ctx.restore();
+      }
+
+      isClicked(x, y) {
+        const dist = Math.sqrt((x - this.x) ** 2 + (y - this.y) ** 2);
+        return dist < this.size && !this.clicked;
+      }
+    }
+
+    // Particle class for explosion effect
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 10;
+        this.vy = (Math.random() - 0.5) * 10;
+        this.life = 1;
+        this.color = color;
+        this.size = 3 + Math.random() * 6;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.3;
+        this.vx *= 0.98;
+        this.life -= 0.02;
+        this.rotation += this.rotationSpeed;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.life;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+        
+        ctx.restore();
+      }
+    }
+
+    // Create initial icons
+    for (let i = 0; i < 20; i++) {
+      icons.push(new Icon());
+    }
+
+    // Spawn power-ups periodically
+    setInterval(() => {
+      if (Math.random() < 0.3 && powerUps.length < 2) {
+        powerUps.push(new PowerUp());
+      }
+    }, 8000);
+
+    // Mouse move tracking
+    canvas.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Touch support
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      mouseX = touch.clientX;
+      mouseY = touch.clientY;
+    }, { passive: false });
+
+    // Update score display
+    function updateScore(points) {
+      score += points;
+      document.getElementById('scoreValue').textContent = score;
+      
+      if (score > highScore) {
+        highScore = score;
+        document.getElementById('highScoreValue').textContent = highScore;
+        localStorage.setItem('aimClubHighScore', highScore.toString());
+      }
+
+      // Animate score
+      const scoreElement = document.getElementById('scoreValue');
+      scoreElement.style.transform = 'scale(1.4)';
+      setTimeout(() => {
+        scoreElement.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Update combo
+    function updateCombo() {
+      combo++;
+      const comboDisplay = document.getElementById('comboDisplay');
+      document.getElementById('comboValue').textContent = combo;
+      
+      if (combo >= 3) {
+        comboDisplay.classList.add('active');
+      }
+
+      // Reset combo timer
+      clearTimeout(comboTimer);
+      comboTimer = setTimeout(() => {
+        combo = 0;
+        comboDisplay.classList.remove('active');
+      }, 2000);
+    }
+
+    // Show click effect
+    function showClickEffect(x, y, points) {
+      const effect = document.createElement('div');
+      effect.className = 'click-effect';
+      effect.textContent = `+${points}`;
+      effect.style.left = x + 'px';
+      effect.style.top = y + 'px';
+      
+      if (doublePoints) {
+        effect.style.color = '#ffeb3b';
+        effect.textContent = `+${points * 2}`;
+      } else if (combo >= 5) {
+        effect.style.color = '#ff6b6b';
+      }
+      
+      document.body.appendChild(effect);
+      
+      setTimeout(() => effect.remove(), 1000);
+    }
+
+    // Activate power-up
+    function activatePowerUp() {
+      doublePoints = true;
+      const powerupDisplay = document.getElementById('powerupDisplay');
+      powerupDisplay.classList.add('active');
+      
+      clearTimeout(doublePointsTimer);
+      doublePointsTimer = setTimeout(() => {
+        doublePoints = false;
+        powerupDisplay.classList.remove('active');
+      }, 5000);
+    }
+
+    // Click handling
+    function handleClick(clickX, clickY) {
+      let clicked = false;
+
+      // Check power-ups
+      powerUps.forEach((powerUp) => {
+        if (powerUp.isClicked(clickX, clickY)) {
+          powerUp.clicked = true;
+          activatePowerUp();
+
+          // Create explosion
+          for (let i = 0; i < 30; i++) {
+            particles.push(new Particle(powerUp.x, powerUp.y, '#ffeb3b'));
+          }
+          clicked = true;
+        }
+      });
+
+      // Check icons
+      icons.forEach((icon) => {
+        if (icon.isClicked(clickX, clickY)) {
+          let points = icon.points;
+          
+          // Apply combo multiplier
+          if (combo >= 5) {
+            points = Math.floor(points * 1.5);
+          }
+          
+          // Apply double points
+          if (doublePoints) {
+            points *= 2;
+          }
+
+          updateScore(points);
+          updateCombo();
+          showClickEffect(clickX, clickY, icon.points);
+          
+          icon.clicked = true;
+
+          // Create explosion particles
+          for (let i = 0; i < 25; i++) {
+            particles.push(new Particle(icon.x, icon.y, icon.color));
+          }
+          
+          clicked = true;
+        }
+      });
+
+      return clicked;
+    }
+
+    canvas.addEventListener('click', (e) => {
+      handleClick(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      handleClick(touch.clientX, touch.clientY);
+    }, { passive: false });
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw power-ups
+      powerUps.forEach(powerUp => {
+        powerUp.update();
+        powerUp.draw();
+      });
+
+      // Update and draw icons
+      icons.forEach(icon => {
+        icon.update();
+        icon.draw();
+      });
+
+      // Update and draw particles
+      particles = particles.filter(particle => {
+        particle.update();
+        particle.draw();
+        return particle.life > 0;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Add ripple effect to social buttons
+    document.querySelectorAll('.social-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 2;
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add CSS animation for ripple
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+</body>
+</html>

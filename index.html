@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aim Club - New Salhia University Student Club</title>
+
+  <!-- SEO Tags -->
+  <meta name="description" content="Aim Club - New Salhia University Student Club. Events, activities, competitions, collaboration, and unforgettable university memories.">
+  <meta name="keywords" content="Aim Club, university club, student activities, competitions, events, New Salhia University, programming competition">
+  <meta name="author" content="Aim Club Team">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="src/aim-club-logo.png">
+
+  <!-- Bootstrap & FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Animated Background Particles -->
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg" data-aos="fade-down">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img src="src/aim-club-logo.png" alt="Aim Club Logo">
+        Aim Club
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="events.html">Achievements</a></li>
+          <li class="nav-item"><a class="nav-link" href="Upcoming.html">Upcoming</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="collegesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-university me-1"></i> Colleges
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="collegesDropdown">
+              <li><a class="dropdown-item" href="CS.html"><i class="fas fa-laptop-code"></i> Computer Science</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Pha.html"><i class="fas fa-pills"></i> Pharmacy</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="PT.html"><i class="fas fa-heartbeat"></i> Physical Therapy</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="business.html"><i class="fas fa-chart-line"></i> Business</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Den.html"><i class="fas fa-tooth"></i> Dentistry</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero text-center text-white">
+    <div class="container">
+      <h1 class="display-3 fw-bold">Welcome to Aim Club</h1>
+      <p class="lead mb-5">Join our activities and create unforgettable university memories</p>
+      <div>
+        <a href="join-us.html" class="btn btn-warning btn-lg mx-2">
+          <i class="fas fa-rocket me-2"></i>Join Now
+        </a>
+        <a href="about.html" class="btn btn-outline-light btn-lg mx-2">
+          <i class="fas fa-info-circle me-2"></i>Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="py-5 text-center">
+    <div class="container">
+      <h2 class="section-title text-primary" data-aos="fade-up">About the Club</h2>
+      <p class="lead mb-5 text-muted" data-aos="fade-up" data-aos-delay="100" style="max-width: 800px; margin: 0 auto;">A student club combining cultural, sports, and social activities to enhance students' skills and develop a spirit of cooperation and creativity</p>
+      <div class="row g-4 mt-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box-wrapper">
+            <div class="icon-box">
+              <div class="icon-box-content">📚</div>
+            </div>
+            <h5 class="fw-bold">Education & Development</h5>
+            <p class="text-muted">Educational programs and specialized workshops for skill development</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box-wrapper">
+            <div class="icon-box">
+              <div class="icon-box-content">🤝</div>
+            </div>
+            <h5 class="fw-bold">Collaboration & Partnership</h5>
+            <p class="text-muted">Building strong relationships and strategic partnerships</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon-box-wrapper">
+            <div class="icon-box">
+              <div class="icon-box-content">⚽</div>
+            </div>
+            <h5 class="fw-bold">Sports & Recreation</h5>
+            <p class="text-muted">Diverse sports activities and exciting competitions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-primary text-center mb-5" data-aos="fade-up">Our Sponsors</h2>
+      <div class="row g-4 align-items-stretch justify-content-center">
+        
+        <!-- Sponsor 1: Triple -->
+        <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="100">
+          <div class="sponsor-card">
+            <div class="sponsor-content">
+              <div class="sponsor-image-wrapper">
+                <img src="src/spons1 (2).png" alt="Triple Logo" class="sponsor-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23667eea%22 rx=%2220%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2260%22 font-weight=%22bold%22%3ET%3C/text%3E%3C/svg%3E'">
+              </div>
+              <h3 class="sponsor-name">Triple</h3>
+              <p class="sponsor-description"></p>
+              <div class="sponsor-social-links">
+                <a href="https://www.tiktok.com/@trible96?_t=ZS-90mGIZwNCml&_r=1" target="_blank" class="sponsor-social-btn">
+                  <i class="fab fa-tiktok me-2"></i> TikTok
+                </a>
+                <a href="https://www.instagram.com/trible_cafe/" target="_blank" class="sponsor-social-btn">
+                  <i class="fab fa-instagram me-2"></i> Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sponsor 2: Glow Hub -->
+        <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="200">
+          <div class="sponsor-card">
+            <div class="sponsor-content">
+              <div class="sponsor-image-wrapper">
+                <img src="src/spons2.png" alt="Glow Hub Logo" class="sponsor-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23f093fb%22 rx=%2220%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2260%22 font-weight=%22bold%22%3EG%3C/text%3E%3C/svg%3E'">
+              </div>
+              <h3 class="sponsor-name">Glow Hub</h3>
+              <p class="sponsor-description"></p>
+              <div class="sponsor-social-links">
+                <a href="https://www.instagram.com/glow__hub918?igsh=MTNxNGx5ZWwxaHFtdA==" target="_blank" class="sponsor-social-btn">
+                  <i class="fab fa-instagram me-2"></i> Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-primary text-center mb-5" data-aos="fade-up">Reviews</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">SE</div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="mb-3">"Joining the club was a turning point for me! I gained valuable experience and met inspiring people"</p>
+            <h6 class="fw-bold mb-0">Shahd El-Sayed</h6>
+            <small class="text-muted"> Physical Therapy Student</small>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">SA</div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="mb-3">"A club aim  is where you make memories and share the spirit with your teammates"</p>
+            <h6 class="fw-bold mb-0">Seif El-Alfy</h6>
+            <small class="text-muted">Pharmacy Student</small>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">AM</div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="mb-3">"Being part of AIM was a truly inspiring journey. The team’s passion and professionalism make every event a chance to learn and grow"</p>
+            <h6 class="fw-bold mb-0">Abdelrahman Moselhy</h6>
+            <small class="text-muted">Physical Therapy Student</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section text-center text-white">
+    <div class="container position-relative" style="z-index: 2;">
+      <h2 class="display-5 fw-bold mb-4" data-aos="fade-up">Ready to Join?</h2>
+      <p class="lead mb-5" data-aos="fade-up" data-aos-delay="100">Be part of the Aim Club family and enjoy an unforgettable university experience</p>
+      <a href="join-us.html" class="btn btn-warning btn-lg px-5 py-3" data-aos="zoom-in" data-aos-delay="200" style="border-radius: 50px; font-weight: 700;">
+        <i class="fas fa-rocket me-2"></i>Get Started
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-white text-center">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5 class="fw-bold mb-3">Aim Club</h5>
+          <p class="mb-0">New Salhia University Student Club</p>
+          <p class="mb-0">Developed by CS team leader - Faris Nabil</p>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5 class="fw-bold mb-3">Quick Links</h5>
+          <div class="d-flex flex-column gap-2">
+            <a href="about.html" class="text-white text-decoration-none">About Us</a>
+            <a href="events.html" class="text-white text-decoration-none">Achievements</a>
+            <a href="contact.html" class="text-white text-decoration-none">Contact</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold mb-3">Follow Us</h5>
+          <div class="d-flex gap-3 justify-content-center">
+            <a href="https://www.facebook.com/profile.php?id=61581576607907&mibextid=ZbWKwL" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/aim_club_sgu?igsh=MWMzaTd2MHdxOHNvdQ==" class="text-white fs-4"><i class="fab fa-instagram"></i></a>
+            <a href="https://whatsapp.com/channel/0029VbBNp2Q8fewjESCViZ0w" class="text-white fs-4"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="text-white fs-4"><i class="fab fa-"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr style="border-color: rgba(255,255,255,0.3);">
+      <p class="mb-3">© 2025 Aim Club - New Salhia University. All Rights Reserved</p>
+      <div class="mt-3">
+        <a href="https://www.freecounterstat.com" title="visitor counter">
+          <img src="https://counter7.stat.ovh/private/freecounterstat.php?c=dp1cz2m8t8l4h6e12df8z9m6gqzcpbnm" border="0" title="visitor counter" alt="visitor counter">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <div class="scroll-top" id="scrollTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

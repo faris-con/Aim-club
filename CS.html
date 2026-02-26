@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS - Aim Club</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="src/CS.png">
+
+  <!-- Bootstrap & FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      --warning-gradient: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+      --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-color: #1a1a2e;
+      --light-color: #f8f9fa;
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Inter', 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+      direction: rtl;
+    }
+
+    /* Animated Background Particles */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px) scale(0.5); opacity: 0; }
+    }
+
+    /* Glass Morphism Navbar */
+    .navbar {
+      background: var(--glass-bg) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar.scrolled {
+      padding: 0.5rem 2rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      background: var(--primary-gradient) !important;
+    }
+
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .navbar-brand {
+      color: white !important;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1.6rem;
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+      position: relative;
+      letter-spacing: -0.5px;
+      margin-left: 3rem;
+    }
+
+    .navbar-brand::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--primary-gradient);
+      transition: width 0.3s ease;
+    }
+
+    .navbar-brand:hover::before {
+      width: 100%;
+    }
+
+    .navbar-brand img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      background: var(--primary-gradient);
+      padding: 2px;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .navbar-brand:hover img {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .navbar-nav {
+    }
+
+    .navbar-nav li:last-child {
+      margin-left: 3rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 1.2rem !important;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      color: var(--dark-color) !important;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--primary-gradient);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+      width: 80%;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-link:hover::after {
+      left: 100%;
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      padding: 0.75rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      margin-top: 0.5rem;
+    }
+
+    .dropdown-item {
+      border-radius: 10px;
+      padding: 0.85rem 1.2rem;
+      transition: all 0.3s ease;
+      gap: 12px;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .dropdown-item:hover {
+      background: var(--primary-gradient);
+      color: white;
+      transform: translateX(-8px) scale(1.02);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .dropdown-item i {
+      width: 24px;
+      margin-left: 10px;
+      font-size: 1.1rem;
+    }
+
+    /* College Hero Section */
+    .college-hero {
+      background: var(--primary-gradient);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 60px 0;
+    }
+
+    .college-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(240, 147, 251, 0.15) 0%, transparent 50%);
+      animation: gradientMove 15s ease-in-out infinite;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -30px) scale(1.1); }
+    }
+
+    .college-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .college-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .college-logo:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Section Title */
+    .section-title {
+      position: relative;
+      display: inline-block;
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      letter-spacing: -1px;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 5px;
+      background: var(--primary-gradient);
+      border-radius: 3px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 5px;
+      background: var(--warning-gradient);
+      border-radius: 3px;
+    }
+
+    /* Leader Card */
+    .leader-card {
+      background: white;
+      border-radius: 25px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      position: relative;
+    }
+
+    .leader-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--primary-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .leader-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .leader-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    .leader-img-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .leader-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+      transition: all 0.5s ease;
+    }
+
+    .leader-card:hover .leader-img {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 15px 60px rgba(102, 126, 234, 0.6);
+    }
+
+    .leader-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .leader-title {
+      color: #666;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Team Member Cards */
+    .team-member {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      text-align: center;
+      padding: 2rem;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-member::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--success-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .team-member:hover::before {
+      transform: scaleX(1);
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .member-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid transparent;
+      background: var(--info-gradient);
+      padding: 3px;
+      margin: 0 auto 1.5rem;
+      transition: all 0.5s ease;
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+    }
+
+    .team-member:hover .member-photo {
+      transform: scale(1.1) rotate(360deg);
+      box-shadow: 0 12px 40px rgba(79, 172, 254, 0.5);
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark-color);
+      margin: 0;
+    }
+
+    /* Activity Photos */
+    .activity-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.5s ease;
+      padding: 1.5rem;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .activity-photo {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      background: var(--warning-gradient);
+      padding: 3px;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 8px 25px rgba(247, 151, 30, 0.3);
+    }
+
+    .activity-card:hover .activity-photo {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 12px 40px rgba(247, 151, 30, 0.5);
+    }
+
+    /* Schedule Button */
+    .schedule-btn {
+      background: var(--primary-gradient);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schedule-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .schedule-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .schedule-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary-gradient);
+      position: relative;
+      padding: 3rem 0;
+      margin-top: 5rem;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--warning-gradient);
+    }
+
+    footer p {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+
+    /* Scroll to Top */
+    .scroll-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 60px;
+      height: 60px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+      font-size: 1.3rem;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-8px) scale(1.1) rotate(360deg);
+      box-shadow: 0 15px 45px rgba(102, 126, 234, 0.6);
+    }
+
+    .scroll-top::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      filter: blur(15px);
+    }
+
+    .scroll-top:hover::before {
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .college-logo {
+        width: 120px;
+        height: 120px;
+      }
+
+      .leader-img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .scroll-top {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Background Particles -->
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg" data-aos="fade-down">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold order-3" href="index.html">
+        Aim Club
+        <img src="src/aim-club-logo.png" alt="Aim Club Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse order-2 justify-content-between w-100" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="collegesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-university me-1"></i> Colleges
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="collegesDropdown">
+              <li><a class="dropdown-item active" href="CS.html"><i class="fas fa-laptop-code"></i> Computer Science</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Pha.html"><i class="fas fa-pills"></i> Pharmacy</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="PT.html"><i class="fas fa-heartbeat"></i> Physical Therapy</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="business.html"><i class="fas fa-chart-line"></i> Business</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Den.html"><i class="fas fa-tooth"></i> Dentistry</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="Upcoming.html">Upcoming</a></li>
+          <li class="nav-item"><a class="nav-link" href="events.html">Achievements</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- College Hero -->
+  <section class="college-hero text-center text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4" data-aos="zoom-in">
+          <div class="mb-4">
+            <img src="src/CS.png" alt="Computers & Information College Logo" class="college-logo">
+          </div>
+        </div>
+        <div class="col-md-8" data-aos="fade-right">
+          <h1 class="display-4 fw-bold">كلية Computers & Information</h1>
+          <p class="lead">نادي طلاب كلية الحاسبات والمعلومات - جامعة الصالحية الجديدة</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Leader -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-primary text-center mb-5" data-aos="fade-up">Team Leader</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8" data-aos="zoom-in" data-aos-delay="100">
+          <div class="leader-card">
+            <div class="leader-img-wrapper">
+              <img src="src/Me.png" alt="Faris Nabil" class="leader-img">
+            </div>
+            <div class="leader-content">
+              <h4 class="leader-name">Faris Nabil</h4>
+              <p class="leader-title">Team Leader - Computers & Information</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Members -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-primary text-center mb-5" data-aos="fade-up">فريق كلية Computers & Information</h2>
+      
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="team-member">
+            <img src="src/Bro.png" alt="Mohamed Ashraf" class="member-photo">
+            <h5 class="card-title">Mohamed Ashraf</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="team-member">
+            <img src="src/kemo.png" alt="Karim Abdelnaby" class="member-photo">
+            <h5 class="card-title">Kareem Abd-Elnabi</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="team-member">
+            <img src="src/Reda.png" alt="Mohamed Reda" class="member-photo">
+            <h5 class="card-title">Mohamed Reda</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+          <div class="team-member">
+            <img src="src/nader.png" alt="Nader Fekry" class="member-photo">
+            <h5 class="card-title">Nader Fekry</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+          <div class="team-member">
+            <img src="src/rabb.png" alt="Rabab Abdelhady" class="member-photo">
+            <h5 class="card-title">Rabab Abdelhady</h5>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+          <div class="team-member">
+            <img src="src/kamel.png" alt="Mohamed Kamel" class="member-photo">
+            <h5 class="card-title">Mohamed Kamel</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Activities -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-primary text-center mb-5" data-aos="fade-up">أنشطة الطلاب</h2>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="activity-card">
+            <img src="src/CS1.png" alt="نشاط طلابي" class="activity-photo">
+          </div>
+        </div>
+        
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="activity-card">
+            <img src="src/CS2.png" alt="نشاط طلابي" class="activity-photo">
+          </div>
+        </div>
+        
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+          <div class="activity-card">
+            <img src="src/CS3.png" alt="نشاط طلابي" class="activity-photo">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Schedule Button -->
+      <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
+        <button class="btn btn-primary schedule-btn text-white">
+          <i class="fas fa-calendar-alt me-2"></i>Schedule
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-white text-center">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5 class="fw-bold mb-3">Aim Club</h5>
+          <p class="mb-0">New Salhia University Student Club</p>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5 class="fw-bold mb-3">Quick Links</h5>
+          <div class="d-flex flex-column gap-2">
+            <a href="about.html" class="text-white text-decoration-none">About Us</a>
+            <a href="events.html" class="text-white text-decoration-none">Achievements</a>
+            <a href="contact.html" class="text-white text-decoration-none">Contact</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold mb-3">Follow Us</h5>
+          <div class="d-flex gap-3 justify-content-center">
+            <a href="https://www.facebook.com/profile.php?id=61581576607907&mibextid=ZbWKwL" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/aim_club_sgu?igsh=MWMzaTd2MHdxOHNvdQ==" class="text-white fs-4"><i class="fab fa-instagram"></i></a>
+            <a href="https://whatsapp.com/channel/0029VbBNp2Q8fewjESCViZ0w" class="text-white fs-4"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr style="border-color: rgba(255,255,255,0.3);">
+      <p class="mb-0">© 2025 Aim Club - New Salhia University. All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <div class="scroll-top" id="scrollTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+
+    // Create animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Button ripple effect
+    document.querySelector('.schedule-btn').addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      ripple.style.position = 'absolute';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.animation = 'ripple 0.6s ease-out';
+      ripple.style.pointerEvents = 'none';
+      
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    // Initialize on page load
+    window.addEventListener('load', () => {
+      createParticles();
+    });
+  </script>
+
+</body>
+</html>
